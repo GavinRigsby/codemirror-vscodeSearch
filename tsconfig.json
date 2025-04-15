@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "strict": true
+  },
+  "include": ["src"]
+}
