@@ -46,18 +46,18 @@ const editor = new EditorView({
 
 ## 🎹 Default Keybindings
 
-| Shortcut	| Action | 
-|===========|========|
-|Mod + F	|Show Find UI|
-|Escape	|Hide Find UI|
-|Mod + H	|Show Replace UI|
-|Enter |	Find Next |
-|Shift + Enter	|Find Previous |
-|Mod + Alt + Enter |	Replace All |
-|Alt + C	| Toggle Case Sensitivity |
-|Alt + W	|Toggle Whole Word |
-|Alt + R	|Toggle Regex |
-|Mod + A	|Select All (when focused) |
+| Shortcut      | Action                          |
+|---------------|---------------------------------|
+| Mod+F         | Show Search UI                  |
+| Mod+H         | Show Replace UI                 |
+| Escape        | Hide Search UI                  |
+| Enter         | Find/Replace Next               |
+| Shift+Enter   | Find Previous                   |
+| Mod+Alt+Enter | Replace All                     |
+| Alt+C         | Toggle Case Sensitivity         |
+| Alt+W         | Toggle Whole Word               |
+| Alt+R         | Toggle Regex                    |
+| Mod+A         | Select All (search/replace box) |
 
 *Mod is Cmd on macOS and Ctrl on Windows/Linux.*
 
