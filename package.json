@@ -1,6 +1,6 @@
 {
-  "name": "@rigstech/codemirror-vscodeSearch",
-  "version": "1.0.5",
+  "name": "@rigstech/codemirror-vscodesearch",
+  "version": "1.0.0",
   "description": "retexture of codemirror's search to look like VS Code",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -17,20 +17,22 @@
     "type": "git",
     "url": "git+https://github.com/GavinRigsby/codemirror-vscodeSearch.git"
   },
-  "keywords": ["codemirror-vscodeSearch", "typescript", "codemirror", "codemirror-extension"],
+  "keywords": [
+    "codemirror-vscodeSearch",
+    "typescript",
+    "codemirror",
+    "codemirror-extension"
+  ],
   "scripts": {
     "clean": "del-cli dist",
     "build": "tsup",
     "dev": "tsup src/index.ts --watch --onSuccess \"npm start\"",
     "start": "node dist/index.js"
   },
-  "author": {
-    "name": "Gavin Rigsby",
-    "email": "gavinrigsby@outlook.com"
-  },
+  "author": "Gavin Rigsby <gavinrigsby@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "@codemirror/search":"^6.5.10",
+    "@codemirror/search": "^6.5.10",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.36.5",
     "codemirror": "^6.0.1"
@@ -39,5 +41,9 @@
     "del-cli": "^6.0.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/GavinRigsby/codemirror-vscodeSearch/issues"
+  },
+  "homepage": "https://github.com/GavinRigsby/codemirror-vscodeSearch#readme"
 }
