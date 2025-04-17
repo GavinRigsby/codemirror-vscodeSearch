@@ -11,5 +11,4 @@
     "moduleResolution": "node",
     "strict": true
   },
-  "include": ["src"]
 }

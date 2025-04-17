@@ -1,6 +1,6 @@
 {
   "name": "@rigstech/codemirror-vscodesearch",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "retexture of codemirror's search to look like VS Code",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
