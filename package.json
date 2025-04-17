@@ -32,10 +32,10 @@
   "author": "Gavin Rigsby <gavinrigsby@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "@codemirror/commands": "^6.8.1",
     "@codemirror/search": "^6.5.10",
     "@codemirror/state": "^6.5.2",
-    "@codemirror/view": "^6.36.5",
-    "codemirror": "^6.0.1"
+    "@codemirror/view": "^6.36.5"
   },
   "devDependencies": {
     "del-cli": "^6.0.0",

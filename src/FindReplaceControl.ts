@@ -1,7 +1,7 @@
-import { findNext, findPrevious, getSearchQuery, RegExpCursor, replaceAll, replaceNext, search, SearchCursor, SearchQuery, setSearchQuery } from "@codemirror/search";
+import { findNext, findPrevious, getSearchQuery, RegExpCursor, replaceAll, replaceNext, SearchCursor, SearchQuery, setSearchQuery } from "@codemirror/search";
 import { CharCategory, EditorState, findClusterBreak, Text } from "@codemirror/state";
 import { SearchVisibilityEffect } from "./state";
-import { EditorView } from "codemirror";
+import { EditorView } from "@codemirror/view";
 import crelt from "crelt";
 
 type Match = { from: number, to: number };
