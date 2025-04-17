@@ -2,7 +2,7 @@ import { getSearchQuery, search, SearchQuery } from "@codemirror/search";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { CustomSearchPanel } from "./FindReplaceControl";
 import { SearchVisibilityEffect } from "./state";
-import { customSearchTheme } from "./theme";
+import { searchBaseTheme } from "./theme";
 
 
 export class SearchPlugin {
@@ -23,7 +23,6 @@ export class SearchPlugin {
     update(update: ViewUpdate) {
         const currentQuery = getSearchQuery(update.state);
         if (!this.prevQuery || !currentQuery.eq(this.prevQuery)) {
-            console.log("Query changed by user");
             this.searchControl.findMatchesAndSelectClosest(update.state);
         }
         this.prevQuery = currentQuery;
@@ -81,9 +80,8 @@ export class SearchPlugin {
 
 export const VSCodeSearch = ViewPlugin.fromClass(SearchPlugin);
 
-
 export const vscodeSearch = [
     search({}),
     VSCodeSearch,
-    customSearchTheme
+    searchBaseTheme
 ]

@@ -17,11 +17,11 @@ export class CustomSearchPanel {
     matchWord: boolean = false;
     matchCase: boolean = false;
     useRegex: boolean = false;
-    
+
     private totalMatches: number = 0;
     searchCursor?: SearchCursor;
     regexCursor?: RegExpCursor;
-    
+
 
     private codicon: Record<string, string> = {
         "downChevron": '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.976 10.072l4.357-4.357.62.618L8.284 11h-.618L3 6.333l.619-.618 4.357 4.357z"/></svg>',
@@ -35,56 +35,51 @@ export class CustomSearchPanel {
         "replace": '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.221 3.739l2.261 2.269L7.7 3.784l-.7-.7-1.012 1.007-.008-1.6a.523.523 0 0 1 .5-.526H8V1H6.48A1.482 1.482 0 0 0 5 2.489V4.1L3.927 3.033l-.706.706zm6.67 1.794h.01c.183.311.451.467.806.467.393 0 .706-.168.94-.503.236-.335.353-.78.353-1.333 0-.511-.1-.913-.301-1.207-.201-.295-.488-.442-.86-.442-.405 0-.718.194-.938.581h-.01V1H9v4.919h.89v-.386zm-.015-1.061v-.34c0-.248.058-.448.175-.601a.54.54 0 0 1 .445-.23.49.49 0 0 1 .436.233c.104.154.155.368.155.643 0 .33-.056.587-.169.768a.524.524 0 0 1-.47.27.495.495 0 0 1-.411-.211.853.853 0 0 1-.16-.532zM9 12.769c-.256.154-.625.231-1.108.231-.563 0-1.02-.178-1.369-.533-.349-.355-.523-.813-.523-1.374 0-.648.186-1.158.56-1.53.374-.376.875-.563 1.5-.563.433 0 .746.06.94.179v.998a1.26 1.26 0 0 0-.792-.276c-.325 0-.583.1-.774.298-.19.196-.283.468-.283.816 0 .338.09.603.272.797.182.191.431.287.749.287.282 0 .558-.092.828-.276v.946zM4 7L3 8v6l1 1h7l1-1V8l-1-1H4zm0 1h7v6H4V8z"/></svg>',
         "replaceAll": '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6 2.677c.147-.31.356-.465.626-.465.248 0 .44.118.573.353.134.236.201.557.201.966 0 .443-.078.798-.235 1.067-.156.268-.365.402-.627.402-.237 0-.416-.125-.537-.374h-.008v.31H11V1h.593v1.677h.008zm-.016 1.1a.78.78 0 0 0 .107.426c.071.113.163.169.274.169.136 0 .24-.072.314-.216.075-.145.113-.35.113-.615 0-.22-.035-.39-.104-.514-.067-.124-.164-.187-.29-.187-.12 0-.219.062-.297.185a.886.886 0 0 0-.117.48v.272zM4.12 7.695L2 5.568l.662-.662 1.006 1v-1.51A1.39 1.39 0 0 1 5.055 3H7.4v.905H5.055a.49.49 0 0 0-.468.493l.007 1.5.949-.944.656.656-2.08 2.085zM9.356 4.93H10V3.22C10 2.408 9.685 2 9.056 2c-.135 0-.285.024-.45.073a1.444 1.444 0 0 0-.388.167v.665c.237-.203.487-.304.75-.304.261 0 .392.156.392.469l-.6.103c-.506.086-.76.406-.76.961 0 .263.061.473.183.631A.61.61 0 0 0 8.69 5c.29 0 .509-.16.657-.48h.009v.41zm.004-1.355v.193a.75.75 0 0 1-.12.436.368.368 0 0 1-.313.17.276.276 0 0 1-.22-.095.38.38 0 0 1-.08-.248c0-.222.11-.351.332-.389l.4-.067zM7 12.93h-.644v-.41h-.009c-.148.32-.367.48-.657.48a.61.61 0 0 1-.507-.235c-.122-.158-.183-.368-.183-.63 0-.556.254-.876.76-.962l.6-.103c0-.313-.13-.47-.392-.47-.263 0-.513.102-.75.305v-.665c.095-.063.224-.119.388-.167.165-.049.315-.073.45-.073.63 0 .944.407.944 1.22v1.71zm-.64-1.162v-.193l-.4.068c-.222.037-.333.166-.333.388 0 .1.027.183.08.248a.276.276 0 0 0 .22.095.368.368 0 0 0 .312-.17c.08-.116.12-.26.12-.436zM9.262 13c.321 0 .568-.058.738-.173v-.71a.9.9 0 0 1-.552.207.619.619 0 0 1-.5-.215c-.12-.145-.181-.345-.181-.598 0-.26.063-.464.189-.612a.644.644 0 0 1 .516-.223c.194 0 .37.069.528.207v-.749c-.129-.09-.338-.134-.626-.134-.417 0-.751.14-1.001.422-.249.28-.373.662-.373 1.148 0 .42.116.764.349 1.03.232.267.537.4.913.4zM2 9l1-1h9l1 1v5l-1 1H3l-1-1V9zm1 0v5h9V9H3zm3-2l1-1h7l1 1v5l-1 1V7H6z"/></svg>',
     }
-    
+
     constructor(readonly view: EditorView) {
-        try{
-           
-        this.view = view;
-        this.commit = this.commit.bind(this);
-        this.buildUI();
-        this.setVisibility(false);
+        try {
 
-        // Now that we have created the internals lets place it where we need to
-        const checkAndInsert = () => {
-            const container = this.view.dom.querySelector('.cm-scroller');
-            const content = container?.querySelector('.cm-content');
-            if (content) {
-                if (!container?.contains(this.dom)) {                        
-                    let elementAfterContent = content.nextSibling;
-                    container?.insertBefore(this.dom, elementAfterContent);
-                    let nextSibling = elementAfterContent as Element | null;
-                    let totalWidthAfter = 0;
+            this.view = view;
+            this.commit = this.commit.bind(this);
+            this.buildUI();
+            this.setVisibility(false);
 
-                    this.dom.style.position = "sticky";
-                    this.dom.style.top = "5px";
+            // Now that we have created the internals lets place it where we need to
+            const checkAndInsert = () => {
+                const container = this.view.dom.querySelector('.cm-scroller');
+                const content = container?.querySelector('.cm-content');
+                if (content) {
+                    if (!container?.contains(this.dom)) {
+                        let elementAfterContent = content.nextSibling;
+                        container?.insertBefore(this.dom, elementAfterContent);
+                        let nextSibling = elementAfterContent as Element | null;
+                        let totalWidthAfter = 0;
 
-                    // Sum the width of all siblings after the content
-                    while (nextSibling) {
-                        totalWidthAfter += nextSibling.getBoundingClientRect().width;
-                        nextSibling = nextSibling.nextElementSibling;
+                        // Sum the width of all siblings after the content
+                        while (nextSibling) {
+                            totalWidthAfter += nextSibling.getBoundingClientRect().width;
+                            nextSibling = nextSibling.nextElementSibling;
+                        }
+
+                        totalWidthAfter += 5;
+
+                        // Set the right property based on the total width after the search control
+                        this.dom.style.right = `${totalWidthAfter}px`;
                     }
 
-                    totalWidthAfter += 5;
-
-                    // Set the right property based on the total width after the search control
-                    this.dom.style.right = `${totalWidthAfter}px`;
+                    clearInterval(pollInterval);  // Stop checking once the element is found
                 }
+            };
 
-                clearInterval(pollInterval);  // Stop checking once the element is found
-            }
-        };
-
-        checkAndInsert.bind(this);
-        const pollInterval = setInterval(checkAndInsert, 1000);
-
+            checkAndInsert.bind(this);
+            const pollInterval = setInterval(checkAndInsert, 1000);
         }
         catch (err) {
-            console.log(`ERROR: ${err}`)
+            console.warn(`ERROR: ${err}`)
         }
     }
 
     private updateMatchCount(): void {
-        console.log(`update counter ${this.currentMatch + 1} of ${this.totalMatches}`)
         if (this.totalMatches > 0) {
             this.matchCountField.textContent = `${this.currentMatch + 1} of ${this.totalMatches}`;
         } else {
@@ -97,29 +92,29 @@ export class CustomSearchPanel {
     }
 
     private charAfter(str: string, index: number) {
-    return str.slice(index, findClusterBreak(str, index))
+        return str.slice(index, findClusterBreak(str, index))
     }
 
     private stringWordTest(doc: Text, categorizer: (ch: string) => CharCategory) {
         return (from: number, to: number, buf: string, bufPos: number) => {
-          if (bufPos > from || bufPos + buf.length < to) {
-            bufPos = Math.max(0, from - 2)
-            buf = doc.sliceString(bufPos, Math.min(doc.length, to + 2))
-          }
-          return (categorizer(this.charBefore(buf, from - bufPos)) != CharCategory.Word ||
-                  categorizer(this.charAfter(buf, from - bufPos)) != CharCategory.Word) &&
-                 (categorizer(this.charAfter(buf, to - bufPos)) != CharCategory.Word ||
-                  categorizer(this.charBefore(buf, to - bufPos)) != CharCategory.Word)
+            if (bufPos > from || bufPos + buf.length < to) {
+                bufPos = Math.max(0, from - 2)
+                buf = doc.sliceString(bufPos, Math.min(doc.length, to + 2))
+            }
+            return (categorizer(this.charBefore(buf, from - bufPos)) != CharCategory.Word ||
+                categorizer(this.charAfter(buf, from - bufPos)) != CharCategory.Word) &&
+                (categorizer(this.charAfter(buf, to - bufPos)) != CharCategory.Word ||
+                    categorizer(this.charBefore(buf, to - bufPos)) != CharCategory.Word)
         }
     }
 
     private regexpWordTest(categorizer: (ch: string) => CharCategory) {
-      return (_from: number, _to: number, match: RegExpExecArray) =>
-        !match[0].length ||
-        (categorizer(this.charBefore(match.input, match.index)) != CharCategory.Word ||
-         categorizer(this.charAfter(match.input, match.index)) != CharCategory.Word) &&
-        (categorizer(this.charAfter(match.input, match.index + match[0].length)) != CharCategory.Word ||
-         categorizer(this.charBefore(match.input, match.index + match[0].length)) != CharCategory.Word)
+        return (_from: number, _to: number, match: RegExpExecArray) =>
+            !match[0].length ||
+            (categorizer(this.charBefore(match.input, match.index)) != CharCategory.Word ||
+                categorizer(this.charAfter(match.input, match.index)) != CharCategory.Word) &&
+            (categorizer(this.charAfter(match.input, match.index + match[0].length)) != CharCategory.Word ||
+                categorizer(this.charBefore(match.input, match.index + match[0].length)) != CharCategory.Word)
     }
 
 
@@ -134,36 +129,29 @@ export class CustomSearchPanel {
         const cursorPos = state.selection.main.head;
         let query = getSearchQuery(state);
 
-        console.log("SEARCHED")
-        console.log(query)
 
-
-        if (query.regexp){
+        if (query.regexp) {
             this.regexCursor = new RegExpCursor(state.doc, query.search)
             this.searchCursor = undefined;
         }
-        else{
-            
+        else {
+
             let cursor = new SearchCursor(state.doc, query.search);
-            if (cursor !== this.searchCursor){
-                console.log(cursor)
+            if (cursor !== this.searchCursor) {
                 this.searchCursor = cursor;
                 this.regexCursor = undefined
-                console.log("NEW CURSOR")
             }
         }
-        
+
         this.matches = [];
 
-        if (this.searchCursor){
-
-
+        if (this.searchCursor) {
             const matchWord = this.stringWordTest(state.doc, state.charCategorizer(state.selection.main.head));
 
             while (!this.searchCursor.done) {
                 this.searchCursor.next();
                 if (!this.searchCursor.done) {
-                    const {from, to} = this.searchCursor.value;
+                    const { from, to } = this.searchCursor.value;
 
                     if (!query.wholeWord || matchWord(from, to, "", 0)) {
                         this.matches.push({ from, to });
@@ -171,7 +159,7 @@ export class CustomSearchPanel {
                 }
             }
         }
-        else if (this.regexCursor){
+        else if (this.regexCursor) {
 
             const matchWord = this.regexpWordTest(state.charCategorizer(state.selection.main.head))
 
@@ -179,25 +167,23 @@ export class CustomSearchPanel {
                 this.regexCursor.next();
 
                 if (!this.regexCursor.done) {
-                    const {from, to, match} = this.regexCursor.value;
+                    const { from, to, match } = this.regexCursor.value;
 
                     if (!query.wholeWord || matchWord(from, to, match)) {
                         this.matches.push({ from, to });
                     }
-                    
+
                 }
             }
         }
-        
+
         this.currentMatch = 0;
         this.totalMatches = this.matches.length;
 
         if (this.matches.length === 0) {
-            console.log('No matches found');
             this.updateMatchCount();
             return;
         }
-        console.log(`${this.currentMatch+1} of ${this.totalMatches}`)
         // Find the match closest to the current cursor
         let closestDistance = Infinity;
 
@@ -214,7 +200,7 @@ export class CustomSearchPanel {
         requestAnimationFrame(() => {
             const match = this.matches[this.currentMatch];
             if (!match) return;
-        
+
             this.view.dispatch({
                 selection: { anchor: match.from, head: match.to },
                 scrollIntoView: true
@@ -233,7 +219,6 @@ export class CustomSearchPanel {
 
         let query = getSearchQuery(this.view.state)
         if (!newQuery.eq(query)) {
-            console.log("QUERY UPDATED")
             this.view.dispatch({
                 effects: setSearchQuery.of(newQuery)
             })
@@ -260,8 +245,8 @@ export class CustomSearchPanel {
         }
     }
 
-    public showReplace(){
-        if (!this.replaceVisibile){
+    public showReplace() {
+        if (!this.replaceVisibile) {
             this.toggleReplace();
         }
     }
@@ -304,21 +289,21 @@ export class CustomSearchPanel {
         this.currentMatch = (this.currentMatch + 1) % this.totalMatches;
         this.updateMatchCount();
         findNext(this.view);
-        
+
     }
 
     public findReplaceMatch() {
-        
+
         let query = getSearchQuery(this.view.state)
-        if (query.replace){
+        if (query.replace) {
             this.replace()
-        }else{
+        } else {
             this.matchNext()
         }
     }
 
     private close() {
-        this.view.dispatch({ effects: SearchVisibilityEffect.of(false)});
+        this.view.dispatch({ effects: SearchVisibilityEffect.of(false) });
     }
 
     public replace() {
@@ -327,7 +312,6 @@ export class CustomSearchPanel {
     }
 
     public replaceAll() {
-        console.log(`ReplaceAll`)
         replaceAll(this.view);
         this.findMatchesAndSelectClosest(this.view.state);
     }
@@ -384,7 +368,7 @@ export class CustomSearchPanel {
             this.toggleReplace();
         });
 
-        this.matchCountField = crelt("span", {class: "match-count"}, "0 of 0")
+        this.matchCountField = crelt("span", { class: "match-count" }, "0 of 0")
 
         let prevMatchButton = this.svgIcon("prevMatch");
         prevMatchButton.className = "prev-match";
@@ -421,15 +405,15 @@ export class CustomSearchPanel {
             this.replaceAll();
         });
 
-        const resizeHandle = crelt("div", {class: "resize-handle"});
+        const resizeHandle = crelt("div", { class: "resize-handle" });
 
-        const toggleSection = crelt("div", {class: "toggle-section"}, 
+        const toggleSection = crelt("div", { class: "toggle-section" },
             resizeHandle,
             toggleReplaceIcon
         );
 
 
-       
+
         let startX: number;
         let startWidth: number;
 
@@ -443,7 +427,6 @@ export class CustomSearchPanel {
         const resize = (e: MouseEvent) => {
             const width = startWidth + (startX - e.clientX);
             const container = this.dom as HTMLDivElement;
-            console.log(`RESIZE ${width}`)
             container.style.width = `${Math.max(420, Math.min(800, width))}px`;
         };
 
@@ -465,52 +448,52 @@ export class CustomSearchPanel {
             searchControls
         );
 
-        const replaceBar = crelt("div", { 
+        const replaceBar = crelt("div", {
             class: "replace-bar",
         },
             this.replaceField
         );
 
-        replaceBar.style.display = this.replaceVisibile ? "flex" : "none" 
+        replaceBar.style.display = this.replaceVisibile ? "flex" : "none"
 
-        const inputSection = crelt("div", { class: "input-section"},
+        const inputSection = crelt("div", { class: "input-section" },
             searchBar,
             replaceBar
         );
 
         const searchIcons = crelt("div", { class: "search-icons" },
-            prevMatchButton, 
-            nextMatchButton, 
+            prevMatchButton,
+            nextMatchButton,
             closeButton
         )
 
-        const searchButtons = crelt("div", { class: "button-group"}, 
+        const searchButtons = crelt("div", { class: "button-group" },
             this.matchCountField,
-            searchIcons  
+            searchIcons
         );
 
-        const replaceButtons = crelt("div", { 
-            class : "replace-buttons",            
+        const replaceButtons = crelt("div", {
+            class: "replace-buttons",
         },
             replaceButton,
             replaceAllButton
         )
 
-        replaceButtons.style.display = this.replaceVisibile ? "flex" : "none" 
+        replaceButtons.style.display = this.replaceVisibile ? "flex" : "none"
 
-        const actionSection = crelt("div", { class: "actions-section"},
+        const actionSection = crelt("div", { class: "actions-section" },
             searchButtons,
             replaceButtons
         );
 
-        this.dom = crelt("div", { class: "find-replace-container" },
+        this.dom = crelt("div", {
+            class: "find-replace-container",
+            "data-keymap-scope": "search"
+        },
             toggleSection,
-            inputSection, 
+            inputSection,
             actionSection
         );
-
-        this.dom.classList.add("cm-panel", "cm-search")
-        console.log("UI FINISHED")
     }
 
     setVisibility(visible: boolean) {

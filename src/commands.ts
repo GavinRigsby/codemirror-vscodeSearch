@@ -4,13 +4,22 @@ import { cursorCharLeft, cursorCharRight, deleteCharBackward, deleteCharForward 
 import { SearchVisibilityEffect } from "./state";
 import { VSCodeSearch } from "./plugin";
 
-export const selectAllCommand: Command = (view) => {
-    console.log("RUN SELECT ALL FUNCITON")
-    if (document.activeElement?.className === 'find-input') {
-        (document.activeElement as HTMLInputElement).select();
-        return true;
+const isSearchActive = () : boolean => {
+    if (document.activeElement){
+        return document.activeElement.classList.contains('find-input');
     }
-    if (document.activeElement?.className === "replace-input") {
+    return false;
+}
+
+const isReplaceActive = () : boolean => {
+    if (document.activeElement){
+        return document.activeElement.classList.contains('replace-input');
+    }
+    return false;
+}
+
+export const selectAllCommand: Command = (view) => {
+    if (isSearchActive() || isReplaceActive()) {
         (document.activeElement as HTMLInputElement).select();
         return true;
     }
@@ -23,8 +32,7 @@ export const selectAllCommand: Command = (view) => {
 };
 
 export const deleteCharacterBackwards: Command = (view) => {
-    if (document.activeElement?.className === 'find-input' || document.activeElement?.className === "replace-input") {
-
+    if (isSearchActive() || isReplaceActive()) {
         simulateBackspace(document.activeElement as HTMLInputElement);
         return true;
     }
@@ -34,9 +42,8 @@ export const deleteCharacterBackwards: Command = (view) => {
     }
 };
 
-
 export const deleteCharacterFowards: Command = (view) => {
-    if (document.activeElement?.className === 'find-input' || document.activeElement?.className === "replace-input") {
+    if (isSearchActive() || isReplaceActive()) {
         simulateBackspace(document.activeElement as HTMLInputElement, "forward");
         return true;
     }
@@ -47,7 +54,7 @@ export const deleteCharacterFowards: Command = (view) => {
 };
 
 export const showSearchVisibilityCommand: Command = (view) => {
-    console.log("RUN SHOW SEARCH")
+    console.log("SHOW");
     view.dispatch({
       effects: SearchVisibilityEffect.of(true) // Dispatch the effect to show the search
     });
@@ -55,7 +62,7 @@ export const showSearchVisibilityCommand: Command = (view) => {
 };
 
 export const searchMoveCursorLeft: Command = (view) => {
-    if (document.activeElement?.className === 'find-input' || document.activeElement?.className === "replace-input") {
+    if (isSearchActive() || isReplaceActive()) {
         const input = document.activeElement as HTMLInputElement
         const pos = input.selectionStart ?? 0;
         if (pos > 0) {
@@ -70,7 +77,7 @@ export const searchMoveCursorLeft: Command = (view) => {
 }
 
 export const searchMoveCursorRight: Command = (view) => {
-    if (document.activeElement?.className === 'find-input' || document.activeElement?.className === "replace-input") {
+    if (isSearchActive() || isReplaceActive()) {
         const input = document.activeElement as HTMLInputElement
         const pos = input.selectionStart ?? 0;
         if (pos < input.value.length) {
@@ -119,7 +126,6 @@ export const searchToggleRegex: Command = (view) => {
 }
 
 export const searchShowReplace: Command = (view) => {
-    console.log("SHOW REPLACE")
     const plugin = view.plugin(VSCodeSearch)
 
     if (!plugin) return false;
@@ -129,7 +135,6 @@ export const searchShowReplace: Command = (view) => {
 }
 
 export const searchFindReplaceMatch: Command = (view) => {
-    console.log("SHOW REPLACE")
     const plugin = view.plugin(VSCodeSearch)
 
     if (!plugin) return false;
@@ -139,7 +144,6 @@ export const searchFindReplaceMatch: Command = (view) => {
 }
 
 export const searchFindPrevious: Command = (view) => {
-    console.log("SHOW REPLACE")
     const plugin = view.plugin(VSCodeSearch)
 
     if (!plugin) return false;
@@ -149,7 +153,6 @@ export const searchFindPrevious: Command = (view) => {
 }
 
 export const searchReplaceAll: Command = (view) => {
-    console.log("SHOW REPLACE")
     const plugin = view.plugin(VSCodeSearch)
 
     if (!plugin) return false;
