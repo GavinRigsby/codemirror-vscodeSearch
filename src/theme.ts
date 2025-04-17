@@ -1,6 +1,12 @@
 import { EditorView } from "@codemirror/view";
 
-const sharedTheme = {
+type Theme = {
+    [key: string]: {
+        [property: string]: string | number;
+    };
+};
+
+const sharedTheme: Theme = {
     ".find-replace-container": {
         borderRadius: "6px",
         boxShadow: "0 2px 8px rgba(34, 33, 33, 0.25)",
@@ -146,23 +152,22 @@ const sharedTheme = {
     },
 }
 
-const lightTheme = {
+const lightTheme: Theme = {
     ".find-replace-container": {
-        backgroundColor: "var(--cm-background, #f3f3f3);",
-        color: "var(--cm-foreground, #cccccc)",
+        backgroundColor: "var(--cm-background, #f3f3f3)",
+        color: "var(--cm-foreground, #454545)",
         border: "1px solid var(--cm-caret, #d4d4d4)",
     },
     ".toggle-replace:hover": {
         backgroundColor: "var(--cm-gutter-foreground, #e1e1e1)",
     },
     ".find-input, .replace-input": {
-        width: "100%",
-        background: "var(--cm-gutter-background, #fffff)",
-        color: "var(--cm-foreground, #cccccc)",
+        background: "var(--cm-gutter-background, #ffffff)",
+        color: "var(--cm-foreground, #454545)",
         border: "1px solid var(--cm-gutter-foreground, #e1e1e1)",
     },
     ".find-input:focus, .replace-input:focus": {
-        borderColor: "var(--cm-caret, #c4c4c4)",
+        borderColor: "var(--cm-caret, #1e51db)",
     },
     ".search-controls div:hover": {
         backgroundColor: "var(--cm-gutter-foreground, #e1e1e1)"
@@ -180,7 +185,7 @@ const lightTheme = {
 
 const darkTheme = {
     ".find-replace-container": {
-        backgroundColor: "var(--cm-background, #252526);",
+        backgroundColor: "var(--cm-background, #252526)",
         color: "var(--cm-foreground, #c4c4c4)",
         border: "1px solid var(--cm-caret, #454545)",
     },
@@ -209,10 +214,22 @@ const darkTheme = {
     },
 };
 
+
+const prependThemeSelector = (theme: Theme, selector: string): Theme => {
+    const updatedTheme : Theme= {};
+
+    Object.keys(theme).forEach( (key) => {
+
+        const updatedKey = key.split(',').map(part => `${selector} ${part.trim()}`).join(', ');
+        // Prepend the selector to each key and assign the original style
+        updatedTheme[updatedKey] = theme[key];
+    });
+
+    return updatedTheme;
+}
+
 export const searchBaseTheme = EditorView.baseTheme({
     ...sharedTheme,
-
-    "&light": lightTheme,
-
-    "&dark": darkTheme,
-})
+    ...prependThemeSelector(lightTheme, "&light"),
+    ...prependThemeSelector(darkTheme, "&dark"),
+});
